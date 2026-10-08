@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Minimal storefront with debounced live search, multi-category filters, pagination, and a shopping cart." />
+  <title>Live Query Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Live Query Store home">
+        <span class="brand-mark">LQ</span>
+        <span>Live Query Store</span>
+      </a>
+      <button id="cartButton" class="cart-button" type="button" aria-controls="cartPanel" aria-expanded="false">
+        <span class="cart-icon" aria-hidden="true">🛒</span>
+        <span>Cart</span>
+        <span id="cartCount" class="cart-count" hidden>0</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">DISCOVER • FILTER • BUY</span>
+          <h1>Find something<br /><span>you’ll love.</span></h1>
+          <p>Search across the catalog, mix categories, and add your favorites to the cart in one smooth flow.</p>
+        </div>
+        <div class="hero-badge">
+          <span class="pulse"></span>
+          Live catalog
+        </div>
+      </section>
+
+      <section class="toolbar" aria-label="Search and filters">
+        <div class="search-section">
+          <label for="searchInput">Search products</label>
+          <div class="search-box">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Try wireless headphones, travel, books..." autocomplete="off" />
+            <span id="searchStatus" class="search-status" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-head">
+            <label>Categories</label>
+            <button id="clearFilters" class="text-button" type="button">Clear all</button>
+          </div>
+          <div id="categoryFilters" class="category-list"></div>
+        </div>
+      </section>
+
+      <section class="results-head">
+        <div>
+          <div class="section-kicker">CATALOG</div>
+          <h2>Explore products</h2>
+          <p id="resultSummary" aria-live="polite">Loading products...</p>
+        </div>
+        <div id="loadingIndicator" class="loading-indicator" aria-live="polite" hidden>
+          <span class="spinner"></span>
+          <span>Updating results</span>
+        </div>
+      </section>
+
+      <section id="resultsGrid" class="grid" aria-live="polite" aria-busy="true"></section>
+
+      <section id="emptyState" class="empty-state" hidden>
+        <div class="empty-icon">⌕</div>
+        <h3>No matching products</h3>
+        <p>Try a broader keyword or remove a category filter.</p>
+        <button id="resetEmpty" class="primary-button" type="button">Reset filters</button>
+      </section>
+
+      <nav id="pagination" class="pagination" aria-label="Pagination"></nav>
+    </main>
+
+    <footer>
+      <span>Express API</span>
+      <span>400ms debounced search</span>
+      <span>Multi-category filtering</span>
+      <span>Paginated catalog</span>
+    </footer>
+  </div>
+
+  <div id="cartOverlay" class="cart-overlay" hidden></div>
+
+  <aside id="cartPanel" class="cart-panel" aria-label="Shopping cart" aria-hidden="true">
+    <div class="cart-header">
+      <div>
+        <span class="section-kicker">YOUR BAG</span>
+        <h2>Shopping cart</h2>
+      </div>
+      <button id="closeCart" class="icon-button" type="button" aria-label="Close cart">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div id="cartEmpty" class="cart-empty" hidden>
+      <div class="cart-empty-icon">🛒</div>
+      <h3>Your cart is empty</h3>
+      <p>Add a few things from the catalog and they’ll show up here.</p>
+      <button id="continueShopping" class="secondary-button" type="button">Continue shopping</button>
+    </div>
+
+    <div id="cartSummary" class="cart-summary" hidden>
+      <div class="summary-row"><span>Subtotal</span><strong id="cartSubtotal">₹0</strong></div>
+      <div class="summary-row"><span>Delivery</span><span class="free-label">FREE</span></div>
+      <div class="summary-total"><span>Total</span><strong id="cartTotal">₹0</strong></div>
+      <button id="purchaseButton" class="purchase-button" type="button">
+        <span>Purchase</span>
+        <span id="purchaseTotal">₹0</span>
+      </button>
+      <p class="cart-note">Demo checkout — no real payment is processed.</p>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
