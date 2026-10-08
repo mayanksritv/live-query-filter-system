@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: live-query-filter-system
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
